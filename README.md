@@ -1,47 +1,47 @@
-# Conversor de Livros em PDF
+# PDF Book Converter
 
-Este script divide um PDF em partes, converte cada parte em layout de livro, gira páginas quando necessário e une tudo em um arquivo final.
+This script processes a PDF by extracting a page range, splitting it into parts, converting each part into a book layout, rotating pages, and merging the result into a final PDF.
 
-## O que ele faz
+## What it does
 
-- Recebe um arquivo PDF de entrada
-- Extrai páginas do intervalo informado e salva em `to_convert.pdf`
-- Divide o PDF em partes fixas pelo tamanho informado
-- Converte cada parte para formato de livro usando `pdftops`, `psbook`, `psnup` e `ps2pdf`
-- Gira as páginas resultantes em 90 graus
-- Une os arquivos gerados em `livro.pdf`
-- Aplica rotação adicional em páginas pares se o último parâmetro for diferente de zero
-- Renomeia o resultado final para o nome de saída informado
-- Remove arquivos temporários gerados durante o processo
+- Reads an input PDF file
+- Extracts pages from the specified start and end range into `to_convert.pdf`
+- Splits that PDF into parts based on the given part size
+- Converts each part to book layout using `pdftops`, `psbook`, `psnup`, and `ps2pdf`
+- Rotates the generated pages by 90 degrees
+- Merges all book parts into `livro.pdf`
+- Optionally applies an extra rotation to even pages when the last parameter is non-zero
+- Renames the final output file to the requested output name
+- Deletes temporary files after completion
 
-## Requisitos
+## Requirements
 
 - Python 3
-- `PyPDF2` (depósito Python)
-- `qpdf` (CLI)
-- `pdftops`, `psbook`, `psnup`, `ps2pdf` (ferramentas de manipulação de PDF/PostScript)
+- `PyPDF2`
+- `qpdf`
+- `pdftops`, `psbook`, `psnup`, `ps2pdf`
 
-## Instalação
+## Install
 
 ```bash
 pip install -r requirements.txt
 ```
 
-> Instale `qpdf`, `poppler` e `ghostscript` pelo gerenciador do sistema ou pacotes nativos do Windows.
+> Install `qpdf`, `poppler`, and `ghostscript` through your system package manager or Windows installers.
 
-## Uso
-
-```bash
-python pdf_livro.py <arquivo_entrada.pdf> <tamanho_parte> <inicio> <fim> <arquivo_saida.pdf> <0|1>
-```
-
-Exemplo:
+## Usage
 
 ```bash
-python pdf_livro.py livro.pdf 20 1 120 livro_final.pdf 1
+python pdf_livro.py <input.pdf> <part_size> <start_page> <end_page> <output.pdf> <0|1>
 ```
 
-- `tamanho_parte`: número de páginas por parte antes de rearranjar em formato de livro
-- `inicio` e `fim`: intervalo de páginas a extrair para conversão inicial
-- `arquivo_saida.pdf`: nome do PDF final
-- `0|1`: se `1`, roda páginas pares adicionais no resultado final
+Example:
+
+```bash
+python pdf_livro.py book.pdf 20 1 120 final_book.pdf 1
+```
+
+- `part_size`: number of pages per part before book layout conversion
+- `start_page` and `end_page`: page range to extract from the input PDF
+- `output.pdf`: final output file name
+- `0|1`: if `1`, applies extra rotation to even pages in the final PDF
