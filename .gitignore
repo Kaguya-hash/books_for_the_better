@@ -1,0 +1,16 @@
+# Ignore everything by default
+*
+
+# But do not ignore this .gitignore file
+!.gitignore
+
+# Whitelist files and folders that exist right now in the repository root
+!setup.bat
+!README.md
+
+# Whitelist the current application folder and its existing files
+!programa/
+!programa/app.py
+!programa/booklet_maker.py
+!programa/icon.ico
+!programa/requirements.txt
