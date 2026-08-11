@@ -504,10 +504,10 @@ class JobConfig:
         extract_start: int,
         extract_end: int,
         output_pdf: Path,
-        rotate_even: bool,
+        rotate_even: bool = False,
         number_start: int | None = None,
         number_end: int | None = None,
-        impose_margin: float = 10,
+        impose_margin: float = 0,
         page_number_position: float = 5,
     ) -> None:
         self.input_pdf = input_pdf
@@ -610,7 +610,7 @@ def build_booklet(
     rotate_even: bool = False,
     number_start: int | None = None,
     number_end: int | None = None,
-    impose_margin: float = 10,
+    impose_margin: float = 0,
     page_number_position: float = 5,
     on_progress: Callable[[str], None] | None = None,
 ) -> Path:
@@ -720,6 +720,18 @@ def collect_params_interactive() -> JobConfig:
 
     rotate_even = ask_yes_no("Rodar páginas pares no PDF final?", default=False)
 
+    impose_margin = ask_int(
+        "Margem de imposição (%) para o conteúdo da página: ",
+        lambda value: 0 <= value <= 100,
+        "Introduza um número entre 0 e 100.",
+    )
+
+    page_number_position = ask_int(
+        "Posição do número da página (%) a partir da base: ",
+        lambda value: 0 <= value <= 100,
+        "Introduza um número entre 0 e 100.",
+    )
+
     extracted_count = extract_end - extract_start + 1
     number_start: int | None = None
     number_end: int | None = None
@@ -746,6 +758,8 @@ def collect_params_interactive() -> JobConfig:
         rotate_even=rotate_even,
         number_start=number_start,
         number_end=number_end,
+        impose_margin=impose_margin,
+        page_number_position=page_number_position,
     )
 
 
@@ -776,6 +790,18 @@ def parse_args(argv: Sequence[str] | None = None) -> JobConfig | None:
         default=None,
         help="Página final da numeração (no documento extraído)",
     )
+    parser.add_argument(
+        "--impose-margin",
+        type=float,
+        default=0.0,
+        help="Margem de imposição em porcentagem (0-100)",
+    )
+    parser.add_argument(
+        "--page-number-position",
+        type=float,
+        default=5.0,
+        help="Posição do número de página em porcentagem a partir da base (0-100)",
+    )
 
     args = parser.parse_args(argv)
 
@@ -787,6 +813,12 @@ def parse_args(argv: Sequence[str] | None = None) -> JobConfig | None:
 
     if args.start > args.end:
         parser.error("start deve ser menor ou igual a end.")
+
+    if args.impose_margin < 0 or args.impose_margin > 100:
+        parser.error("impose-margin deve ser entre 0 e 100.")
+
+    if args.page_number_position < 0 or args.page_number_position > 100:
+        parser.error("page-number-position deve ser entre 0 e 100.")
 
     input_pdf = args.input.expanduser().resolve()
     if not input_pdf.is_file():
@@ -816,6 +848,8 @@ def parse_args(argv: Sequence[str] | None = None) -> JobConfig | None:
         rotate_even=args.rotate_even,
         number_start=args.number_start,
         number_end=args.number_end,
+        impose_margin=args.impose_margin,
+        page_number_position=args.page_number_position,
     )
 
 

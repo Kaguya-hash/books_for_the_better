@@ -25,6 +25,7 @@ Quick start (Windows)
 Option A — Use the included portable setup (recommended for Windows users who want a self-contained app):
 
 1. Double-click or run [setup.bat](/C:/Users/vsara/Desktop/books_for_the_better/setup.bat).
+   - If Windows blocks the file, right-click `setup.bat`, choose **Properties**, and click **Unblock** on the General tab before running it.
    - The script downloads an embedded Python distribution (if missing), enables site-packages, installs pip, and installs the dependencies from [programa/requirements.txt].
    - It also creates a "conversor_booklet.lnk" shortcut in the repository folder and attempts to place one on the Desktop.
 2. Use the created shortcut to launch the GUI (it runs app.py with the local pythonw.exe) or run the GUI manually:
@@ -51,11 +52,13 @@ Options and notes:
 - --start / --end: inclusive 1-based page numbers within the source PDF.
 - --output: name or path of the final PDF. If you pass a filename without a directory, the output will be created inside the program folder; otherwise the resolved parent directory is used—but note: the output directory must NOT be the program folder or a subfolder of it.
 - --rotate-even: optional flag to rotate even pages (useful for duplex printers that expect alternating rotations).
+- --impose-margin: optional percentage (0-100) to shrink page content slightly when placing two pages side-by-side.
+- --page-number-position: optional page-number vertical position as a percentage from the bottom of the page (0-100).
 - --number-start / --number-end: optional page-number stamping on the extracted document (use both together).
 
 Example:
 
-python programa\booklet_maker.py "my_document.pdf" --part-size 28 --start 1 --end 56 --output "my_book.pdf" --rotate-even --number-start 1 --number-end 56
+python programa\booklet_maker.py "my_document.pdf" --part-size 28 --start 1 --end 56 --output "my_book.pdf" --rotate-even --impose-margin 10 --page-number-position 5 --number-start 1 --number-end 56
 
 Programmatic usage (from Python)
 --------------------------------
