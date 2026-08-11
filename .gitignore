@@ -2,7 +2,7 @@
 *
 
 # But do not ignore this .gitignore file
-!.gitignore
+# !.gitignore
 
 # Whitelist files and folders that exist right now in the repository root
 !setup.bat
