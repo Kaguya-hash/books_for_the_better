@@ -12,7 +12,7 @@ setlocal EnableDelayedExpansion
 :: ---- App identity (must match setup.bat) ----
 set "APP_NAME=BooksForTheBetter"
 set "APP_DISPLAY_NAME=Books for the Better"
-set "SHORTCUT_NAME=conversor_booklet.lnk"
+set "SHORTCUT_NAME=%APP_DISPLAY_NAME%.lnk"
 
 :: ---- Install paths ----
 set "INSTALL_DIR=%LOCALAPPDATA%\Programs\%APP_NAME%"

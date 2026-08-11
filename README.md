@@ -13,20 +13,21 @@ Key features
 
 Project layout
 --------------
-- [programa](/C:/Users/vsara/Desktop/books_for_the_better/programa/) — application folder
-  - [app.py](/C:/Users/vsara/Desktop/books_for_the_better/programa/app.py) — PySide6 GUI frontend
-  - [booklet_maker.py](/C:/Users/vsara/Desktop/books_for_the_better/programa/booklet_maker.py) — conversion core (CLI + programmatic API)
-  - [requirements.txt](/C:/Users/vsara/Desktop/books_for_the_better/programa/requirements.txt) — Python dependencies
+- [programa](programa/) — application folder
+  - [app.py](programa/app.py) — PySide6 GUI frontend
+  - [booklet_maker.py](programa/booklet_maker.py) — conversion core (CLI + programmatic API)
+  - [requirements.txt](programa/requirements.txt) — Python dependencies
   - icon.ico — optional shortcut icon used by setup script
-- [setup.bat](/C:/Users/vsara/Desktop/books_for_the_better/setup.bat) — convenience script for Windows that downloads a portable Python and installs dependencies locally
+- [setup.bat](setup.bat) — convenience script for Windows that downloads a portable Python and installs dependencies locally~
+- [uninstall.bat](uninstall.bat) — convenience script for Windows that uninstalls the aplication~
 
 Quick start (Windows)
 ----------------------
 Option A — Use the included portable setup (recommended for Windows users who want a self-contained app):
 
-1. Double-click or run [setup.bat](/C:/Users/vsara/Desktop/books_for_the_better/setup.bat).
+1. Double-click or run [setup.bat](setup.bat).
    - If Windows blocks the file, right-click `setup.bat`, choose **Properties**, and click **Unblock** on the General tab before running it.
-   - The script downloads an embedded Python distribution (if missing), enables site-packages, installs pip, and installs the dependencies from [programa/requirements.txt].
+   - The script downloads an embedded Python distribution (if missing), enables site-packages, installs pip, and installs the dependencies from [programa/requirements.txt](programa/requirements.txt).
    - It also creates a "conversor_booklet.lnk" shortcut in the repository folder and attempts to place one on the Desktop.
 2. Use the created shortcut to launch the GUI (it runs app.py with the local pythonw.exe) or run the GUI manually:
    - From a command prompt: C:\Users\...\programa\python_dist\python.exe app.py
@@ -97,7 +98,7 @@ Dependencies
 - reportlab
 - PySide6 (for the GUI)
 
-These are listed in [programa/requirements.txt](/C:/Users/vsara/Desktop/books_for_the_better/programa/requirements.txt).
+These are listed in [programa/requirements.txt](programa/requirements.txt).
 
 Troubleshooting
 ---------------
@@ -107,8 +108,8 @@ Troubleshooting
 
 Development notes
 -----------------
-- The GUI implementation is in [app.py](/C:/Users/vsara/Desktop/books_for_the_better/programa/app.py).
-- The conversion pipeline and CLI live in [booklet_maker.py](/C:/Users/vsara/Desktop/books_for_the_better/programa/booklet_maker.py). The function build_booklet(...) is the recommended programmatic entry point for other code.
+- The GUI implementation is in [app.py](programa/app.py).
+- The conversion pipeline and CLI live in [booklet_maker.py](programa/booklet_maker.py). The function build_booklet(...) is the recommended programmatic entry point for other code.
 - If adding tests or automation, prefer calling build_booklet(...) directly rather than invoking main() to avoid ProcessPoolExecutor import/Windows spawn pitfalls.
 
 Contributing
@@ -127,7 +128,7 @@ No LICENSE file is included in this repository. If this code should be redistrib
 Support / Contact
 -----------------
 For quick questions about running the tool, examine the source files:
-- [booklet_maker.py](/C:/Users/vsara/Desktop/books_for_the_better/programa/booklet_maker.py)
-- [app.py](/C:/Users/vsara/Desktop/books_for_the_better/programa/app.py)
+- [booklet_maker.py](programa/booklet_maker.py)
+- [app.py](programa/app.py)
 
 Happy printing!
