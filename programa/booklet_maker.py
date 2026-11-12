@@ -289,7 +289,9 @@ def run_booklet_pipeline(chapter_filename: Path, output_name: Path, *, cwd: Path
         for pair_start in range(0, len(order), 2):
             left_num = order[pair_start]
             right_num = order[pair_start + 1]
-            out_page = PageObject.create_blank_page(
+            # pypdf 7+ requires the destination page to belong to a writer
+            # before merge_transformed_page (it calls replace_contents).
+            out_page = writer.add_blank_page(
                 width=sheet_width,
                 height=sheet_height,
             )
@@ -307,10 +309,9 @@ def run_booklet_pipeline(chapter_filename: Path, output_name: Path, *, cwd: Path
                     0,
                     half_width,
                     sheet_height,
+                    impose_margin=0,
                 )
                 out_page.merge_transformed_page(source_page, transform)
-
-            writer.add_page(out_page)
 
         with output_name.open("wb") as out_file:
             writer.write(out_file)
@@ -356,7 +357,9 @@ def run_booklet_pipeline_from_range(
         for pair_start in range(0, len(order), 2):
             left_num = order[pair_start]
             right_num = order[pair_start + 1]
-            out_page = PageObject.create_blank_page(
+            # pypdf 7+ requires the destination page to belong to a writer
+            # before merge_transformed_page (it calls replace_contents).
+            out_page = writer.add_blank_page(
                 width=sheet_width,
                 height=sheet_height,
             )
@@ -378,8 +381,6 @@ def run_booklet_pipeline_from_range(
                     impose_margin=impose_margin
                 )
                 out_page.merge_transformed_page(source_page, transform)
-
-            writer.add_page(out_page)
 
         with output_name.open("wb") as out_file:
             writer.write(out_file)
@@ -426,13 +427,13 @@ def add_page_numbers(pdf_path: Path, number_start: int, number_end: int, page_nu
     current_number = 1
 
     for index, page in enumerate(reader.pages, start=1):
+        writer_page = writer.add_page(page)
         if number_start <= index <= number_end:
-            width = float(page.mediabox.width)
-            height = float(page.mediabox.height)
+            width = float(writer_page.mediabox.width)
+            height = float(writer_page.mediabox.height)
             overlay_reader = create_page_number_overlay(width, height, current_number, page_number_position)
-            page.merge_page(overlay_reader.pages[0])
+            writer_page.merge_page(overlay_reader.pages[0])
             current_number += 1
-        writer.add_page(page)
 
     tmp_path = pdf_path.with_suffix(".tmp.pdf")
     with tmp_path.open("wb") as out_file:
