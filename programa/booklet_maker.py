@@ -446,7 +446,7 @@ def rotate_even_pages(pdf_path: Path) -> None:
     writer = PdfWriter()
     for index, page in enumerate(reader.pages, start=1):
         if index % 2 == 0:
-            page.rotate(270)
+            page.rotate(180)
         writer.add_page(page)
 
     tmp_path = pdf_path.with_suffix(".tmp.pdf")
